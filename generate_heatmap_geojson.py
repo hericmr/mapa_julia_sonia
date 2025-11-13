@@ -78,7 +78,8 @@ def load_cities_from_csv(filename):
         reader = csv.reader(f)
         next(reader)  # Pular cabeçalho
         for row in reader:
-            for city in row:
+            # Ignorar a última coluna (índice 5): "Cidades Região SP fora o município"
+            for city in row[:-1]:  # Excluir última coluna
                 city_clean = city.strip()
                 if city_clean:
                     cities.append(city_clean)
