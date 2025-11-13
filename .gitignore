@@ -1,0 +1,22 @@
+# Arquivos temporários
+minimap_temp.png
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos grandes (opcional - descomente se não quiser versionar)
+# sp_boundaries.geojson
+# heatmap_sao_paulo.png
+

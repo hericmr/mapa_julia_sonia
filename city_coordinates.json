@@ -1,0 +1,342 @@
+{
+  "Diadema": {
+    "lat": -23.6866428,
+    "lon": -46.6246935,
+    "count": 32
+  },
+  "Bertioga": {
+    "lat": -23.848568,
+    "lon": -46.139586,
+    "count": 16
+  },
+  "Barra do Turvo": {
+    "lat": -24.756421,
+    "lon": -48.5056942,
+    "count": 9
+  },
+  "Caçapava": {
+    "lat": -23.099204,
+    "lon": -45.707645,
+    "count": 9
+  },
+  "Aruja": {
+    "lat": -23.396266,
+    "lon": -46.3175449,
+    "count": 1
+  },
+  "Atibaia": {
+    "lat": -23.1177393,
+    "lon": -46.5547861,
+    "count": 1
+  },
+  "Contagem": {
+    "lat": -23.6193036,
+    "lon": -46.6326702,
+    "count": 1
+  },
+  "Caieiras": {
+    "lat": -23.3644621,
+    "lon": -46.7484765,
+    "count": 1
+  },
+  "Caratinga": {
+    "lat": -23.1774894,
+    "lon": -45.8501676,
+    "count": 1
+  },
+  "Campo Limpo": {
+    "lat": -23.6361999,
+    "lon": -46.7627968,
+    "count": 1
+  },
+  "Oeiras": {
+    "lat": -23.5537995,
+    "lon": -46.5237389,
+    "count": 1
+  },
+  "Carapicuiba": {
+    "lat": -23.5234673,
+    "lon": -46.8406808,
+    "count": 1
+  },
+  "Ponta Porã": {
+    "lat": -23.5579193,
+    "lon": -47.0949395,
+    "count": 1
+  },
+  "Xique-Xique": {
+    "lat": -22.2898687,
+    "lon": -48.1289736,
+    "count": 1
+  },
+  "Cajati": {
+    "lat": -24.7272376,
+    "lon": -48.1077914,
+    "count": 7
+  },
+  "Campos do Jordão": {
+    "lat": -22.738299,
+    "lon": -45.5903769,
+    "count": 4
+  },
+  "Ferraz de Vasconcelos": {
+    "lat": -23.541056,
+    "lon": -46.37097,
+    "count": 2
+  },
+  "Francisco Morato": {
+    "lat": -23.2817308,
+    "lon": -46.7448996,
+    "count": 2
+  },
+  "Jacareí": {
+    "lat": -23.3050682,
+    "lon": -45.9723075,
+    "count": 16
+  },
+  "Franco da Rocha": {
+    "lat": -23.3328038,
+    "lon": -46.724446,
+    "count": 3
+  },
+  "Cubatão": {
+    "lat": -23.8857982,
+    "lon": -46.4241869,
+    "count": 11
+  },
+  "Cananéia": {
+    "lat": -25.0104609,
+    "lon": -47.9315628,
+    "count": 3
+  },
+  "Guaíra": {
+    "lat": -20.3245873,
+    "lon": -48.3148818,
+    "count": 1
+  },
+  "Guarulhos": {
+    "lat": -23.4675941,
+    "lon": -46.5277704,
+    "count": 4
+  },
+  "Eldorado": {
+    "lat": -24.522583,
+    "lon": -48.1093489,
+    "count": 9
+  },
+  "Itaquacetuba": {
+    "lat": -23.5452942,
+    "lon": -46.2044808,
+    "count": 2
+  },
+  "Jandira": {
+    "lat": -23.5282246,
+    "lon": -46.902003,
+    "count": 2
+  },
+  "Jundiaí": {
+    "lat": -23.1887668,
+    "lon": -46.884506,
+    "count": 1
+  },
+  "Mogi das Cruzes": {
+    "lat": -23.5234284,
+    "lon": -46.1926671,
+    "count": 1
+  },
+  "Guarujá": {
+    "lat": -23.9927768,
+    "lon": -46.2558332,
+    "count": 15
+  },
+  "Montes Claros": {
+    "lat": -22.0364411,
+    "lon": -47.7365641,
+    "count": 1
+  },
+  "Iguape": {
+    "lat": -24.7042692,
+    "lon": -47.5563733,
+    "count": 7
+  },
+  "Monteiro Lobato": {
+    "lat": -22.9553542,
+    "lon": -45.8387146,
+    "count": 7
+  },
+  "Orlândia": {
+    "lat": -20.720278,
+    "lon": -47.886667,
+    "count": 1
+  },
+  "Osasco": {
+    "lat": -23.5324859,
+    "lon": -46.7916801,
+    "count": 5
+  },
+  "Mauá": {
+    "lat": -23.6669527,
+    "lon": -46.4616922,
+    "count": 16
+  },
+  "Ilha Comprida": {
+    "lat": -24.7445292,
+    "lon": -47.5525529,
+    "count": 5
+  },
+  "Paraibuna": {
+    "lat": -23.3864203,
+    "lon": -45.6626797,
+    "count": 8
+  },
+  "Piracicaba": {
+    "lat": -22.725165,
+    "lon": -47.6493269,
+    "count": 2
+  },
+  "Poá": {
+    "lat": -23.5249082,
+    "lon": -46.3445663,
+    "count": 1
+  },
+  "Itariri": {
+    "lat": -24.2900711,
+    "lon": -47.176151,
+    "count": 7
+  },
+  "Salto": {
+    "lat": -23.1989983,
+    "lon": -47.2913682,
+    "count": 1
+  },
+  "Itanhaém": {
+    "lat": -24.1833421,
+    "lon": -46.7896229,
+    "count": 8
+  },
+  "São Mateus": {
+    "lat": -23.5982995,
+    "lon": -46.4817046,
+    "count": 1
+  },
+  "São Paulo": {
+    "lat": -23.5506507,
+    "lon": -46.6333824,
+    "count": 142
+  },
+  "Santa Branca": {
+    "lat": -23.3974353,
+    "lon": -45.8842294,
+    "count": 5
+  },
+  "Jacupiranga": {
+    "lat": -24.6945594,
+    "lon": -48.0024027,
+    "count": 5
+  },
+  "Ribeirão Pires": {
+    "lat": -23.7134177,
+    "lon": -46.4160929,
+    "count": 8
+  },
+  "São José dos Campos": {
+    "lat": -23.1867782,
+    "lon": -45.8854538,
+    "count": 70
+  },
+  "Mongaguá": {
+    "lat": -24.0959454,
+    "lon": -46.6234361,
+    "count": 1
+  },
+  "Peruibe": {
+    "lat": -24.3218105,
+    "lon": -46.9977452,
+    "count": 16
+  },
+  "Miracatu": {
+    "lat": -24.2839078,
+    "lon": -47.4535128,
+    "count": 4
+  },
+  "Rio Grande da Serra": {
+    "lat": -23.7441905,
+    "lon": -46.3924746,
+    "count": 5
+  },
+  "Pariquera-Açu": {
+    "lat": -24.7146891,
+    "lon": -47.8802361,
+    "count": 12
+  },
+  "Santo André": {
+    "lat": -23.6533509,
+    "lon": -46.5279039,
+    "count": 39
+  },
+  "Praia Grande": {
+    "lat": -24.008979,
+    "lon": -46.4144939,
+    "count": 18
+  },
+  "Pedro de Toledo": {
+    "lat": -24.2769071,
+    "lon": -47.23393,
+    "count": 5
+  },
+  "Registro": {
+    "lat": -24.497942,
+    "lon": -47.844895,
+    "count": 25
+  },
+  "Santos": {
+    "lat": -23.9335988,
+    "lon": -46.3286399,
+    "count": 70
+  },
+  "Sete Barras": {
+    "lat": -24.3878438,
+    "lon": -47.9265798,
+    "count": 6
+  },
+  "São Bernardo do Campo": {
+    "lat": -23.7080345,
+    "lon": -46.5506747,
+    "count": 48
+  },
+  "São José dos Campos -": {
+    "lat": -23.1867782,
+    "lon": -45.8854538,
+    "count": 2
+  },
+  "Taubaté": {
+    "lat": -23.031448,
+    "lon": -45.5612792,
+    "count": 6
+  },
+  "São Caetano do Sul": {
+    "lat": -23.6195923,
+    "lon": -46.5688323,
+    "count": 10
+  },
+  "São Vicente": {
+    "lat": -23.9664177,
+    "lon": -46.3861401,
+    "count": 19
+  },
+  "Suzano": {
+    "lat": -23.5427842,
+    "lon": -46.3108391,
+    "count": 2
+  },
+  "Sorocaba": {
+    "lat": -23.4684836,
+    "lon": -47.4424129,
+    "count": 4
+  },
+  "Taboão da Serra": {
+    "lat": -23.6121912,
+    "lon": -46.7790539,
+    "count": 2
+  }
+}
