@@ -9,7 +9,7 @@ Este projeto gera mapas de calor baseados em dados de frequência de cidades do 
 ## 🚀 Funcionalidades
 
 - **Mapa Interativo Dinâmico** (`heatmap_sao_paulo.html`): Heatmap que filtra cidades de baixa frequência baseado no nível de zoom
-- **Mapa Estático** (`heatmap_sao_paulo_static.html`): Visualização fixa como imagem de livro de geografia
+- **Mapa Estático** (`index.html`): Visualização fixa como imagem de livro de geografia (usado para GitHub Pages)
 - **Imagem PNG** (`heatmap_sao_paulo.png`): Mapa estático com minimap no canto inferior direito
 - **Gradiente de cores profissional**: Escala de temperatura (azul → ciano → verde → amarelo → laranja → vermelho)
 - **Contorno do estado**: GeoJSON simplificado do estado de São Paulo
@@ -49,7 +49,9 @@ python3 generate_heatmap_geojson.py
 
 ## 🌐 Visualização Online
 
-Os arquivos HTML podem ser visualizados diretamente no navegador ou hospedados no GitHub Pages.
+O mapa estático está disponível via GitHub Pages em: https://hericmr.github.io/mapa_julia_sonia/
+
+O arquivo `index.html` é automaticamente usado como página inicial pelo GitHub Pages.
 
 ## 📊 Dados
 

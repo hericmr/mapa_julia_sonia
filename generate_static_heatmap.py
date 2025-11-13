@@ -72,7 +72,7 @@ def load_geojson(filename):
             return json.load(f)
     return None
 
-def create_static_heatmap(geocoded_cities, geojson_data, output_file='heatmap_sao_paulo_static.html'):
+def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html'):
     """
     Cria mapa de calor estático (como imagem de livro) sem controles de zoom.
     """
