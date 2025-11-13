@@ -32,17 +32,24 @@ def load_cities_from_csv(filename):
 def geocode_cities(city_counts, cache_file='city_coordinates.json'):
     """Geocodifica cidades usando cache para evitar requisições repetidas."""
     geocoded = {}
+    cached_data = {}
     
     # Carregar cache se existir
     if os.path.exists(cache_file):
         with open(cache_file, 'r', encoding='utf-8') as f:
-            geocoded = json.load(f)
+            cached_data = json.load(f)
     
     geolocator = Nominatim(user_agent="heatmap_sp")
     
     print(f"Geocodificando {len(city_counts)} cidades...")
     for i, (city, count) in enumerate(city_counts.items(), 1):
-        if city in geocoded:
+        if city in cached_data:
+            # Usar dados do cache, mas atualizar o count
+            geocoded[city] = {
+                'lat': cached_data[city]['lat'],
+                'lon': cached_data[city]['lon'],
+                'count': count
+            }
             continue
             
         location_query = f"{city}, São Paulo, Brasil"
@@ -50,6 +57,11 @@ def geocode_cities(city_counts, cache_file='city_coordinates.json'):
             location = geolocator.geocode(location_query, timeout=10)
             if location:
                 geocoded[city] = {
+                    'lat': location.latitude,
+                    'lon': location.longitude,
+                    'count': count
+                }
+                cached_data[city] = {
                     'lat': location.latitude,
                     'lon': location.longitude,
                     'count': count
@@ -62,10 +74,11 @@ def geocode_cities(city_counts, cache_file='city_coordinates.json'):
             print(f"Erro ao geocodificar {city}: {e}")
             continue
     
-    # Salvar cache
+    # Salvar cache atualizado (incluindo novas cidades)
     with open(cache_file, 'w', encoding='utf-8') as f:
-        json.dump(geocoded, f, ensure_ascii=False, indent=2)
+        json.dump(cached_data, f, ensure_ascii=False, indent=2)
     
+    # Retornar apenas as cidades que estão em city_counts (filtradas)
     return geocoded
 
 def create_heatmap_image(geocoded_cities, output_file='heatmap_sao_paulo.png'):
