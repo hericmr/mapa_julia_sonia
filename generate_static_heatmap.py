@@ -144,7 +144,8 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
         
         # Adicionar TODAS as cidades, sem filtragem
         # Adicionar pontos proporcionais à frequência (sem limite artificial)
-        num_points = max(1, int(count * 2))  # 2 pontos por unidade de frequência
+        # Mais pontos para áreas de alta frequência para garantir que vermelho se sobreponha
+        num_points = max(1, int(count * 2.5))  # 2.5 pontos por unidade de frequência (aumentado)
         for _ in range(num_points):
             heat_data.append([lat, lon])
     
@@ -155,46 +156,51 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
     if heat_data:
         HeatMap(
             heat_data,
-            radius=30,  # Raio maior para melhor cobertura
-            blur=25,   # Blur maior para transição suave
+            radius=40,  # Raio otimizado para melhor cobertura e transição suave
+            blur=30,   # Blur aumentado para transição mais suave entre intensidades
             max_zoom=18,  # Permitir zoom alto mas manter dados fixos
-            min_opacity=0.3,  # Opacidade mínima para melhor visibilidade
-            max_zoom_intensity=1.5,  # Intensidade máxima no zoom
-            # Gradiente profissional de temperatura (frio -> quente)
+            min_opacity=0.4,  # Opacidade mínima aumentada para melhor visibilidade
+            max_zoom_intensity=1.8,  # Intensidade ajustada para melhor contraste
+            # Gradiente científico sequencial (YlOrRd - Yellow-Orange-Red)
+            # Paleta perceptualmente uniforme, adequada para publicações científicas
+            # Baseada em ColorBrewer - usando cores hexadecimais (Folium requer formato hex)
             gradient={
-                0.0: 'rgba(0, 0, 255, 0)',      # Transparente no início
-                0.1: 'rgba(0, 100, 255, 0.3)',  # Azul frio
-                0.3: 'rgba(0, 200, 255, 0.5)',  # Ciano
-                0.5: 'rgba(0, 255, 200, 0.6)',  # Verde-água
-                0.7: 'rgba(255, 255, 0, 0.7)',  # Amarelo
-                0.85: 'rgba(255, 150, 0, 0.8)', # Laranja
-                1.0: 'rgba(255, 0, 0, 1.0)'     # Vermelho quente
+                0.0: 'transparent',           # Transparente no início
+                0.15: '#ffffb2',              # Amarelo muito claro (baixa intensidade)
+                0.3: '#fed976',               # Amarelo claro
+                0.45: '#feb24c',             # Amarelo-alaranjado
+                0.6: '#fd8d3c',              # Laranja médio
+                0.75: '#fc4e2a',             # Laranja-avermelhado
+                0.9: '#e31a1c',              # Vermelho médio
+                1.0: '#b10026'               # Vermelho escuro (alta intensidade)
             }
         ).add_to(sp_map)
     
-    # Adicionar marcadores para TODAS as cidades - SEM clustering (todos sempre visíveis)
-    # Os marcadores permanecem fixos independente do zoom (sem agrupamento dinâmico)
+    # Adicionar marcadores apenas para cidades principais (opcional, muito transparentes)
+    # Marcadores muito sutis para não interferir com o heatmap
+    # O heatmap já mostra a intensidade através das cores
     sorted_cities = sorted(geocoded_cities.items(), 
                           key=lambda x: x[1]['count'], 
-                          reverse=True)  # Mostrar TODAS as cidades, não apenas top 15
+                          reverse=True)
     
-    for city, data in sorted_cities:
-        lat = data['lat']
-        lon = data['lon']
-        count = data['count']
-        radius = min(count / 3, 12)
-        
-        folium.CircleMarker(
-            location=[lat, lon],
-            radius=radius,
-            popup=f"<b>{city}</b><br>Município de trabalho: {count}",
-            tooltip=f"{city}: {count} ocorrências",
-            color='darkred',
-            fill=True,
-            fillColor='red',
-            fillOpacity=0.7,
-            weight=2
-        ).add_to(sp_map)  # Adicionar diretamente ao mapa, não a um cluster
+    # Adicionar apenas marcadores muito sutis para as top cidades (opcional)
+    # Comentado para deixar apenas o heatmap visível
+    # for city, data in sorted_cities[:10]:  # Apenas top 10
+    #     lat = data['lat']
+    #     lon = data['lon']
+    #     count = data['count']
+    #     
+    #     folium.CircleMarker(
+    #         location=[lat, lon],
+    #         radius=3,  # Muito pequeno
+    #         popup=f"<b>{city}</b><br>Município de trabalho: {count}",
+    #         tooltip=f"{city}: {count} ocorrências",
+    #         color='darkred',
+    #         fill=True,
+    #         fillColor='red',
+    #         fillOpacity=0.2,  # Muito transparente
+    #         weight=1
+    #     ).add_to(sp_map)
     
     # Adicionar legenda profissional com gradiente de temperatura (lado esquerdo)
     if counts:
@@ -205,12 +211,13 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
                 font-size:13px; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3)">
     <h4 style="margin-top: 0; margin-bottom: 10px; color: #333;">Mapa de Calor - Município de trabalho</h4>
     <div style="height: 20px; background: linear-gradient(to right, 
-        rgba(0, 100, 255, 0.3), 
-        rgba(0, 200, 255, 0.5), 
-        rgba(0, 255, 200, 0.6), 
-        rgba(255, 255, 0, 0.7), 
-        rgba(255, 150, 0, 0.8), 
-        rgba(255, 0, 0, 1.0)); 
+        rgba(255, 255, 178, 0.4), 
+        rgba(254, 217, 118, 0.5), 
+        rgba(254, 178, 76, 0.6), 
+        rgba(253, 141, 60, 0.7), 
+        rgba(252, 78, 42, 0.85), 
+        rgba(227, 26, 28, 0.95), 
+        rgba(177, 0, 38, 1.0)); 
         border: 1px solid #ccc; margin: 10px 0; border-radius: 4px;"></div>
     <div style="display: flex; justify-content: space-between; font-size: 11px; color: #666;">
         <span>Baixa ({min_count})</span>
@@ -250,7 +257,8 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
     </h4>
     <div style="margin-bottom: 10px; padding: 8px; background-color: #f5f5f5; border-radius: 4px;">
         <p style="margin: 0; font-size: 11px; color: #333;">
-            <strong>Total:</strong> <span style="font-weight: bold; color: #333;">{total_occurrences:,}</span>
+            <strong>Total de ocorrências:</strong> <span style="font-weight: bold; color: #333;">{total_occurrences:,}</span><br>
+            <strong>Cidades únicas:</strong> <span style="font-weight: bold; color: #333;">{len(geocoded_cities)}</span>
         </p>
     </div>
     <div style="margin-top: 10px;">
@@ -287,7 +295,55 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
         html {
             background-color: #f5f5f5;
         }
+        /* Garantir que o polígono do estado fique atrás do heatmap e marcadores */
+        .leaflet-pane.leaflet-overlay-pane svg path[fill="#e8e8e8"] {
+            z-index: 100 !important;
+        }
+        /* Canvas do heatmap deve ficar na frente com z-index alto para vermelho se sobrepor */
+        .leaflet-heatmap-layer {
+            z-index: 500 !important;
+        }
+        .leaflet-heatmap-layer canvas {
+            z-index: 500 !important;
+        }
+        /* Marcadores devem ficar na frente de tudo */
+        .leaflet-marker-pane {
+            z-index: 600 !important;
+        }
+        .leaflet-marker-icon {
+            z-index: 600 !important;
+        }
     </style>
+    <script>
+        // Garantir que o polígono do estado fique atrás após o carregamento
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var overlays = document.querySelectorAll('.leaflet-overlay-pane svg');
+                overlays.forEach(function(svg) {
+                    var paths = svg.querySelectorAll('path[fill="#e8e8e8"]');
+                    if (paths.length > 0) {
+                        svg.style.zIndex = '100';
+                    }
+                });
+                // Heatmap canvas deve ficar na frente com z-index alto para vermelho se sobrepor
+                var heatmapLayer = document.querySelector('.leaflet-heatmap-layer');
+                if (heatmapLayer) {
+                    heatmapLayer.style.zIndex = '500';
+                }
+                var heatmapCanvas = document.querySelector('.leaflet-heatmap-layer canvas');
+                if (heatmapCanvas) {
+                    heatmapCanvas.style.zIndex = '500';
+                    // Garantir que o canvas seja renderizado por último
+                    heatmapCanvas.style.pointerEvents = 'none';
+                }
+                // Garantir que todas as camadas do heatmap tenham z-index alto
+                var allHeatmapLayers = document.querySelectorAll('.leaflet-heatmap-layer');
+                allHeatmapLayers.forEach(function(layer) {
+                    layer.style.zIndex = '500';
+                });
+            }, 500);
+        });
+    </script>
     '''
     sp_map.get_root().html.add_child(folium.Element(static_css))
     

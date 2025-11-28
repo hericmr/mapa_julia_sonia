@@ -146,14 +146,22 @@ def create_heatmap_svg(geocoded_cities, geojson_data, output_file='heatmap_sao_p
             radius=25,
             blur=20,
             max_zoom=1,
+            # Gradiente científico sequencial (YlOrRd - Yellow-Orange-Red)
+            # Paleta perceptualmente uniforme, adequada para publicações científicas
+            # Baseada em ColorBrewer - usando cores hexadecimais (Folium requer formato hex)
             gradient={
-                0.2: 'blue',
-                0.4: 'cyan',
-                0.6: 'lime',
-                0.8: 'yellow',
-                1.0: 'red'
+                0.0: 'transparent',           # Transparente no início
+                0.15: '#ffffb2',              # Amarelo muito claro (baixa intensidade)
+                0.3: '#fed976',               # Amarelo claro
+                0.45: '#feb24c',             # Amarelo-alaranjado
+                0.6: '#fd8d3c',              # Laranja médio
+                0.75: '#fc4e2a',             # Laranja-avermelhado
+                0.9: '#e31a1c',              # Vermelho médio
+                1.0: '#b10026'               # Vermelho escuro (alta intensidade)
             },
-            min_opacity=0.3
+            min_opacity=0.4,  # Opacidade mínima aumentada para melhor visibilidade
+            radius=40,  # Raio otimizado
+            blur=30    # Blur aumentado para transição suave
         ).add_to(sp_map)
     
     # Adicionar marcadores para cidades principais
@@ -193,6 +201,61 @@ def create_heatmap_svg(geocoded_cities, geojson_data, output_file='heatmap_sao_p
     </div>
     '''
     sp_map.get_root().html.add_child(folium.Element(legend_html))
+    
+    # Adicionar CSS e JavaScript para garantir que o polígono fique atrás
+    zindex_css_js = '''
+    <style>
+        /* Garantir que o polígono do estado fique atrás do heatmap e marcadores */
+        .leaflet-pane.leaflet-overlay-pane svg path[fill="#e8e8e8"] {
+            z-index: 100 !important;
+        }
+        /* Canvas do heatmap deve ficar na frente com z-index alto para vermelho se sobrepor */
+        .leaflet-heatmap-layer {
+            z-index: 500 !important;
+        }
+        .leaflet-heatmap-layer canvas {
+            z-index: 500 !important;
+        }
+        /* Marcadores devem ficar na frente de tudo */
+        .leaflet-marker-pane {
+            z-index: 600 !important;
+        }
+        .leaflet-marker-icon {
+            z-index: 600 !important;
+        }
+    </style>
+    <script>
+        // Garantir que o polígono do estado fique atrás após o carregamento
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var overlays = document.querySelectorAll('.leaflet-overlay-pane svg');
+                overlays.forEach(function(svg) {
+                    var paths = svg.querySelectorAll('path[fill="#e8e8e8"]');
+                    if (paths.length > 0) {
+                        svg.style.zIndex = '100';
+                    }
+                });
+                // Heatmap canvas deve ficar na frente com z-index alto para vermelho se sobrepor
+                var heatmapLayer = document.querySelector('.leaflet-heatmap-layer');
+                if (heatmapLayer) {
+                    heatmapLayer.style.zIndex = '500';
+                }
+                var heatmapCanvas = document.querySelector('.leaflet-heatmap-layer canvas');
+                if (heatmapCanvas) {
+                    heatmapCanvas.style.zIndex = '500';
+                    // Garantir que o canvas seja renderizado por último
+                    heatmapCanvas.style.pointerEvents = 'none';
+                }
+                // Garantir que todas as camadas do heatmap tenham z-index alto
+                var allHeatmapLayers = document.querySelectorAll('.leaflet-heatmap-layer');
+                allHeatmapLayers.forEach(function(layer) {
+                    layer.style.zIndex = '500';
+                });
+            }, 500);
+        });
+    </script>
+    '''
+    sp_map.get_root().html.add_child(folium.Element(zindex_css_js))
     
     # Salvar HTML
     sp_map.save(output_file)
