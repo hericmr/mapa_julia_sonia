@@ -184,9 +184,9 @@ def create_minimap_overview(geojson_data, lat_range, lon_range, temp_file='minim
                     lon=lons,
                     lat=lats,
                     mode='lines',
-                    line=dict(width=0.8, color='#0066cc'),
+                    line=dict(width=0.8, color='#333333'),  # Dark gray border for better visibility
                     fill='toself',
-                    fillcolor='rgba(230, 242, 255, 0.4)',
+                    fillcolor='rgba(232, 232, 232, 1.0)',  # Light gray - solid color for scientific publication printing
                     showlegend=False,
                     hoverinfo='skip'
                 ))
@@ -204,9 +204,9 @@ def create_minimap_overview(geojson_data, lat_range, lon_range, temp_file='minim
                         lon=lons,
                         lat=lats,
                         mode='lines',
-                        line=dict(width=0.8, color='#0066cc'),
+                        line=dict(width=0.8, color='#333333'),  # Dark gray border for better visibility
                         fill='toself',
-                        fillcolor='rgba(230, 242, 255, 0.4)',
+                        fillcolor='rgba(232, 232, 232, 1.0)',  # Light gray - solid color for scientific publication printing
                         showlegend=False,
                         hoverinfo='skip'
                     ))
@@ -314,7 +314,7 @@ def create_heatmap_with_geojson(geocoded_cities, geojson_data, output_file='heat
             'Cidade': city,
             'Latitude': data['lat'],
             'Longitude': data['lon'],
-            'Frequência': data['count']
+            'Município de trabalho': data['count']
         })
     
     df = pd.DataFrame(city_data)
@@ -340,9 +340,9 @@ def create_heatmap_with_geojson(geocoded_cities, geojson_data, output_file='heat
                     lon=lons,
                     lat=lats,
                     mode='lines',
-                    line=dict(width=1, color='#0066cc'),
+                    line=dict(width=1, color='#333333'),  # Dark gray border for better visibility
                     fill='toself',
-                    fillcolor='rgba(230, 242, 255, 0.15)',
+                    fillcolor='rgba(232, 232, 232, 1.0)',  # Light gray - solid color for scientific publication printing
                     name='Municípios',
                     showlegend=(idx == 0),  # Mostrar legenda apenas uma vez
                     legendgroup='municipios',
@@ -358,9 +358,9 @@ def create_heatmap_with_geojson(geocoded_cities, geojson_data, output_file='heat
                         lon=lons,
                         lat=lats,
                         mode='lines',
-                        line=dict(width=1, color='#0066cc'),
+                        line=dict(width=1, color='#333333'),  # Dark gray border for better visibility
                         fill='toself',
-                        fillcolor='rgba(230, 242, 255, 0.15)',
+                        fillcolor='rgba(232, 232, 232, 1.0)',  # Light gray - solid color for scientific publication printing
                         name='Municípios',
                         showlegend=False,
                         legendgroup='municipios',
@@ -370,11 +370,11 @@ def create_heatmap_with_geojson(geocoded_cities, geojson_data, output_file='heat
     # Criar dados expandidos para densidade
     expanded_data = []
     for _, row in df.iterrows():
-        for _ in range(min(int(row['Frequência']), 30)):
+        for _ in range(min(int(row['Município de trabalho']), 30)):
             expanded_data.append({
                 'Latitude': row['Latitude'],
                 'Longitude': row['Longitude'],
-                'Frequência': row['Frequência'],
+                'Município de trabalho': row['Município de trabalho'],
                 'Cidade': row['Cidade']
             })
     
@@ -387,32 +387,32 @@ def create_heatmap_with_geojson(geocoded_cities, geojson_data, output_file='heat
         mode='markers',
         marker=dict(
             size=10,
-            color=df_expanded['Frequência'],
+            color=df_expanded['Município de trabalho'],
             colorscale='Hot',
             showscale=True,
             colorbar=dict(
-                title=dict(text="Frequência", font=dict(size=16)),
+                title=dict(text="Município de trabalho", font=dict(size=16)),
                 x=1.02,
                 len=0.7
             ),
             opacity=0.7,
             line=dict(width=0),
             cmin=0,
-            cmax=df['Frequência'].max()
+            cmax=df['Município de trabalho'].max()
         ),
         name='Densidade',
-        hovertemplate='Frequência: %{marker.color:.0f}<extra></extra>'
+        hovertemplate='Município de trabalho: %{marker.color:.0f}<extra></extra>'
     ))
     
     # Adicionar pontos das cidades principais
-    top_cities = df.nlargest(15, 'Frequência')
+    top_cities = df.nlargest(15, 'Município de trabalho')
     fig.add_trace(go.Scattergeo(
         lon=top_cities['Longitude'],
         lat=top_cities['Latitude'],
-        text=top_cities['Cidade'] + '<br>Freq: ' + top_cities['Frequência'].astype(str),
+        text=top_cities['Cidade'] + '<br>Município de trabalho: ' + top_cities['Município de trabalho'].astype(str),
         mode='markers+text',
         marker=dict(
-            size=top_cities['Frequência'] / 4 + 10,
+            size=top_cities['Município de trabalho'] / 4 + 10,
             color='darkred',
             line=dict(width=2, color='black'),
             opacity=0.9
@@ -435,7 +435,7 @@ def create_heatmap_with_geojson(geocoded_cities, geojson_data, output_file='heat
     # Configurar layout do mapa focando no estado de São Paulo
     fig.update_layout(
         title=dict(
-            text='Mapa de Calor - Estado de São Paulo<br><sub>Baseado na Frequência de Cidades</sub>',
+            text='Mapa de Calor - Estado de São Paulo<br><sub>Baseado no Município de trabalho</sub>',
             x=0.5,
             xanchor='center',
             font=dict(size=24, color='#0066cc', family='Arial')

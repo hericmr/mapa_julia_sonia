@@ -91,7 +91,7 @@ def create_heatmap_image(geocoded_cities, output_file='heatmap_sao_paulo.png'):
             'Cidade': city,
             'Latitude': data['lat'],
             'Longitude': data['lon'],
-            'Frequência': data['count']
+            'Município de trabalho': data['count']
         })
     
     df = pd.DataFrame(city_data)
@@ -108,9 +108,9 @@ def create_heatmap_image(geocoded_cities, output_file='heatmap_sao_paulo.png'):
         lon=sp_boundaries_lon,
         lat=sp_boundaries_lat,
         mode='lines',
-        line=dict(width=3, color='#0066cc'),
+        line=dict(width=3, color='#333333'),  # Dark gray border for better visibility
         fill='toself',
-        fillcolor='rgba(230, 242, 255, 0.3)',
+        fillcolor='rgba(232, 232, 232, 1.0)',  # Light gray - solid color for scientific publication printing
         name='Limites do Estado',
         showlegend=False,
         hoverinfo='skip'
@@ -119,11 +119,11 @@ def create_heatmap_image(geocoded_cities, output_file='heatmap_sao_paulo.png'):
     # Criar dados expandidos para densidade (múltiplos pontos por cidade baseado na frequência)
     expanded_data = []
     for _, row in df.iterrows():
-        for _ in range(min(int(row['Frequência']), 30)):
+        for _ in range(min(int(row['Município de trabalho']), 30)):
             expanded_data.append({
                 'Latitude': row['Latitude'],
                 'Longitude': row['Longitude'],
-                'Frequência': row['Frequência'],
+                'Município de trabalho': row['Município de trabalho'],
                 'Cidade': row['Cidade']
             })
     
@@ -136,30 +136,30 @@ def create_heatmap_image(geocoded_cities, output_file='heatmap_sao_paulo.png'):
         mode='markers',
         marker=dict(
             size=8,
-            color=df_expanded['Frequência'],
+            color=df_expanded['Município de trabalho'],
             colorscale='Hot',
             showscale=True,
             colorbar=dict(
-                title=dict(text="Frequência", font=dict(size=14)),
+                title=dict(text="Município de trabalho", font=dict(size=14)),
                 x=1.02
             ),
             opacity=0.6,
             line=dict(width=0)
         ),
         name='Densidade',
-        hovertemplate='Frequência: %{marker.color}<extra></extra>'
+        hovertemplate='Município de trabalho: %{marker.color}<extra></extra>'
     ))
     
     # Adicionar pontos das cidades principais
-    top_cities = df.nlargest(15, 'Frequência')
+    top_cities = df.nlargest(15, 'Município de trabalho')
     fig.add_trace(go.Scattergeo(
         lon=top_cities['Longitude'],
         lat=top_cities['Latitude'],
-        text=top_cities['Cidade'] + '<br>Freq: ' + top_cities['Frequência'].astype(str),
+        text=top_cities['Cidade'] + '<br>Município de trabalho: ' + top_cities['Município de trabalho'].astype(str),
         mode='markers+text',
         marker=dict(
-            size=top_cities['Frequência'] / 3 + 8,
-            color=top_cities['Frequência'],
+            size=top_cities['Município de trabalho'] / 3 + 8,
+            color=top_cities['Município de trabalho'],
             colorscale='Reds',
             showscale=False,
             line=dict(width=2, color='darkred'),
@@ -174,7 +174,7 @@ def create_heatmap_image(geocoded_cities, output_file='heatmap_sao_paulo.png'):
     # Configurar layout do mapa focando no estado de São Paulo
     fig.update_layout(
         title=dict(
-            text='Mapa de Calor - Estado de São Paulo<br><sub>Baseado na Frequência de Cidades</sub>',
+            text='Mapa de Calor - Estado de São Paulo<br><sub>Baseado no Município de trabalho</sub>',
             x=0.5,
             xanchor='center',
             font=dict(size=22, color='#0066cc')

@@ -122,10 +122,10 @@ def create_heatmap_svg(geocoded_cities, geojson_data, output_file='heatmap_sao_p
         folium.GeoJson(
             geojson_data,
             style_function=lambda feature: {
-                'fillColor': '#e6f2ff',
-                'color': '#0066cc',
+                'fillColor': '#e8e8e8',  # Light gray - solid color for scientific publication printing
+                'color': '#333333',      # Dark gray border for better visibility
                 'weight': 3,
-                'fillOpacity': 0.2,
+                'fillOpacity': 1.0,       # Solid fill (no transparency) for print
             },
             tooltip='Estado de São Paulo'
         ).add_to(sp_map)
@@ -170,7 +170,7 @@ def create_heatmap_svg(geocoded_cities, geojson_data, output_file='heatmap_sao_p
         folium.CircleMarker(
             location=[lat, lon],
             radius=radius,
-            popup=f"<b>{city}</b><br>Frequência: {count}",
+            popup=f"<b>{city}</b><br>Município de trabalho: {count}",
             tooltip=f"{city}: {count} ocorrências",
             color='darkred',
             fill=True,

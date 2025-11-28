@@ -160,7 +160,7 @@ def create_heatmap(geocoded_cities, output_file='heatmap_sao_paulo.html'):
         
         folium.Marker(
             location=[lat, lon],
-            popup=f"<b>{city}</b><br>Frequência: {count}",
+            popup=f"<b>{city}</b><br>Município de trabalho: {count}",
             tooltip=f"{city}: {count} ocorrências",
             icon=folium.Icon(color='red', icon='info-sign')
         ).add_to(marker_cluster)
@@ -175,7 +175,7 @@ def create_heatmap(geocoded_cities, output_file='heatmap_sao_paulo.html'):
                 bottom: 50px; left: 50px; width: 280px; height: 200px; 
                 background-color: white; border:2px solid #333; z-index:9999; 
                 font-size:13px; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3)">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: #333;">Mapa de Calor - Frequência</h4>
+    <h4 style="margin-top: 0; margin-bottom: 10px; color: #333;">Mapa de Calor - Município de trabalho</h4>
     <div style="height: 20px; background: linear-gradient(to right, 
         rgba(0, 100, 255, 0.3), 
         rgba(0, 200, 255, 0.5), 

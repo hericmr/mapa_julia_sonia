@@ -112,10 +112,10 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
         folium.GeoJson(
             geojson_data,
             style_function=lambda feature: {
-                'fillColor': '#e6f2ff',
-                'color': '#0066cc',
+                'fillColor': '#e8e8e8',  # Light gray - solid color for scientific publication printing
+                'color': '#333333',      # Dark gray border for better visibility
                 'weight': 2,
-                'fillOpacity': 0.3,
+                'fillOpacity': 1.0,       # Solid fill (no transparency) for print
             },
             tooltip='Estado de São Paulo'
         ).add_to(sp_map)
@@ -187,7 +187,7 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
         folium.CircleMarker(
             location=[lat, lon],
             radius=radius,
-            popup=f"<b>{city}</b><br>Frequência: {count}",
+            popup=f"<b>{city}</b><br>Município de trabalho: {count}",
             tooltip=f"{city}: {count} ocorrências",
             color='darkred',
             fill=True,
@@ -203,7 +203,7 @@ def create_static_heatmap(geocoded_cities, geojson_data, output_file='index.html
                 bottom: 30px; left: 30px; width: 280px; height: 180px; 
                 background-color: white; border:2px solid #333; z-index:9999; 
                 font-size:13px; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3)">
-    <h4 style="margin-top: 0; margin-bottom: 10px; color: #333;">Mapa de Calor - Frequência</h4>
+    <h4 style="margin-top: 0; margin-bottom: 10px; color: #333;">Mapa de Calor - Município de trabalho</h4>
     <div style="height: 20px; background: linear-gradient(to right, 
         rgba(0, 100, 255, 0.3), 
         rgba(0, 200, 255, 0.5), 
